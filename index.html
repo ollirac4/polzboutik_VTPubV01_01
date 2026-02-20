@@ -28,7 +28,6 @@
         .screen { display: none; padding: 20px; margin: 0 auto; }
         .screen.active { display: block; }
 
-        /* Correction pour les écrans avec entêtes fixes */
         #screen-edit-inventory, #screen-project { padding: 0; }
         .screen-content { padding: 20px; }
 
@@ -38,15 +37,14 @@
             top: 0;
             z-index: 1000;
             background: var(--light);
-            padding: 20px 20px 0px 20px; /* Réduit le padding bas car le tableau suit */
+            padding: 20px 20px 0px 20px;
             border-bottom: 1px solid var(--border);
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* Style spécifique pour forcer l'entête du tableau à coller au sticky-header */
         .sticky-table-header {
             background: white;
-            margin: 10px -20px 0 -20px; /* Aligné avec les bords du parent */
+            margin: 10px -20px 0 -20px;
             padding: 0 20px;
         }
 
@@ -82,48 +80,66 @@
         .name-input { width: 100% !important; border: 1px solid #ccc !important; }
         .val-input { width: 65px !important; text-align: center; border: 1px solid #ccc !important; }
 
-        /* Drag & Drop */
-        .drag-handle { cursor: grab; font-size: 18px; color: #ccc; visibility: hidden; }
-        .reorder-active .drag-handle { visibility: visible; }
-        tr.dragging { opacity: 0.5; background: #e3f2fd; border: 2px dashed var(--primary); }
+        .no-spinners::-webkit-outer-spin-button, .no-spinners::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .no-spinners { -moz-appearance: textfield; }
 
         /* Toggle Switch */
-        .switch-container { display: flex; align-items: center; gap: 8px; font-size: 0.7em; font-weight: bold; color: #666; }
         .switch { position: relative; display: inline-block; width: 34px; height: 18px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 18px; }
         .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(16px); }
+        .switch-container { display: flex; align-items: center; gap: 8px; font-size: 0.7em; font-weight: bold; color: #666; }
 
-        /* Affichage Colonnes */
+        /* Drag & Drop */
+        .drag-handle { cursor: grab; font-size: 18px; color: #ccc; visibility: hidden; }
+        .reorder-active .drag-handle { visibility: visible; }
+        tr.dragging { opacity: 0.5; background: #e3f2fd; border: 2px dashed var(--primary); }
+
+        /* Affichage Colonnes Listes */
         #listsWrapper { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; }
-        .list-container { min-width: 380px; background: #fff; border-radius: 8px; padding: 15px; border-top: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .list-container { min-width: 480px; background: #fff; border-radius: 8px; padding: 15px; border-top: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         
+        /* Grille: Nom/Suppr | Prix | Desc | Total | +/- */
+        .list-grid-row { display: grid; grid-template-columns: 1fr 85px 65px 75px 100px; align-items: center; gap: 5px; }
+        
+        .list-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .list-title-area { flex: 1; min-width: 0; }
+        .list-finance-controls { display: flex; align-items: center; gap: 5px; }
+
+        .price-col-cell { text-align: right; font-size: 0.85em; }
+        .discount-input, .price-input { width: 100% !important; padding: 4px !important; text-align: center; font-size: 0.85em; border: 1px solid #ccc; border-radius: 4px; }
+        .override { border: 2px solid var(--accent) !important; }
+        
+        .total-list-display { font-size: 1.1em; font-weight: bold; color: var(--dark); text-align: right; min-width: 75px; }
+        .hide-finance .finance-ui { display: none !important; }
+        .hide-finance .list-grid-row { grid-template-columns: 1fr 100px; }
+
+        .btn-view { background: none; border: none; cursor: pointer; font-size: 1.1em; filter: grayscale(1); transition: 0.2s; padding: 0; margin-left: 5px; }
+        .btn-view.active { filter: grayscale(0); }
+        .btn-apply-all { background: white; color: var(--accent); border: 1px solid var(--accent); border-radius: 50%; cursor: pointer; width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+
         .suggestions { position: absolute; background: white; width: 100%; z-index: 100; border: 1px solid #ccc; border-radius: 0 0 4px 4px; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .list-separator-view { background: #dfe6e9; padding: 4px; margin: 10px 0; border-radius: 4px; font-size: 0.7em; color: #2d3436; font-weight: bold; text-align: center; text-transform: uppercase; }
 
-        .active-project-banner { background: #2d3436; color: white; padding: 8px 15px; font-size: 0.9em; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1001; height: 25px; }
-
+        /* Bande noire iPad optimisée */
+        .active-project-banner { background: #2d3436; color: white; padding: 8px 15px; font-size: 0.9em; display: flex; align-items: center; position: sticky; top: 0; z-index: 1001; height: 35px; }
+        
         .pre-add-container { display: flex; gap: 5px; margin-top: 5px; }
         .qty-picker { display: flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; background: #f1f1f1; }
         .qty-picker button { width: 35px; border: none; background: #eee; cursor: pointer; font-weight: bold; font-size: 16px; }
         .qty-picker input { width: 60px; border: none; text-align: center; background: white; font-weight: bold; font-size: 15px; padding: 5px 0; }
 
-        .price-col { display: table-cell; text-align: right; padding: 0 8px; font-size: 0.85em; width: 75px; }
-        .discount-input { width: 55px !important; padding: 4px !important; text-align: center; font-size: 0.8em; border: 1px solid #ccc; border-radius: 4px; }
-        .discount-input.override { border: 2px solid var(--accent) !important; }
-        .total-list-display { font-size: 1.1em; font-weight: bold; color: var(--dark); margin-right: 5px; }
-        .hide-finance .price-col, .hide-finance .th-finance { display: none !important; }
-        .btn-view { background: none; border: none; cursor: pointer; font-size: 1.2em; filter: grayscale(1); transition: 0.2s; padding: 0; }
-        .btn-view.active { filter: grayscale(0); }
-        .btn-apply-all { background: white; color: var(--accent); border: 1px solid var(--accent); border-radius: 50%; cursor: pointer; width: 22px; height: 22px; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .btn-apply-all:hover { background: var(--accent); color: white; }
+        /* Nouveaux styles pour boutons iPad */
+        .ipad-qty-btn { width: 45px; height: 35px; font-size: 18px; border-radius: 6px; }
+        .btn-delete-item { color: var(--danger); font-weight: bold; font-size: 18px; cursor: pointer; margin-left: 8px; border:none; background:none; padding:0; vertical-align: middle; }
+        .copyright-text { font-size: 10px; opacity: 0.6; color: white; margin-left: auto; }
     </style>
 </head>
 <body>
-<div id="screen-home" class="screen active" style="max-width:1200px;">
+
+<div id="screen-home" class="screen active" style="max-width:1200px; position: relative; min-height: 90vh;">
     <h1 style="text-align:center; color:var(--primary); margin-bottom:20px;">Visites Techniques</h1>
     <button class="btn btn-sep" style="width:100%; margin-bottom:30px; padding:15px; font-size:1.1em;" onclick="showScreen('screen-inventories')">📦 GÉRER LES INVENTAIRES</button>
     
@@ -136,12 +152,17 @@
     </div>
     <h3 style="color:#555;">Mes Projets en cours</h3>
     <div id="projectList"></div>
+
+    <div style="text-align: center; width: 100%; padding: 20px 0; color: #777; font-size: 12px; margin-top: 40px;">
+        @ 2026 Olivier Racine
+    </div>
 </div>
 
 <div id="screen-inventories" class="screen" style="max-width:1200px;">
-    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
-        <div onclick="showScreen('screen-home')" style="cursor:pointer; font-size:1.4em; background:var(--dark); color:white; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%;">←</div>
-        <h2 style="margin:0;">Inventaires</h2>
+    <div style="display:flex; align-items:center; background: #2d3436; color:white; padding: 10px 15px; margin: -20px -20px 20px -20px;">
+        <div onclick="showScreen('screen-home')" style="cursor:pointer; font-size:1.4em; margin-right: 25px;">←</div>
+        <h2 style="margin:0; font-size: 1.1em;">Inventaires</h2>
+        <span class="copyright-text">@ 2026 Olivier Racine</span>
     </div>
     <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
         <div style="display:flex; gap:10px;">
@@ -154,18 +175,17 @@
 
 <div id="screen-edit-inventory" class="screen">
     <div class="sticky-header">
-        <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-            <div onclick="showScreen('screen-inventories')" style="cursor:pointer; font-size:1.4em; background:var(--dark); color:white; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%;">←</div>
-            <h2 id="editInvTitle" style="margin:0;">Modifier Inventaire</h2>
+        <div style="display:flex; align-items:center; background: #2d3436; color:white; padding: 10px 15px; margin: -20px -20px 15px -20px;">
+            <div onclick="showScreen('screen-inventories')" style="cursor:pointer; font-size:1.4em; margin-right: 25px;">←</div>
+            <h2 id="editInvTitle" style="margin:0; font-size: 1.1em;">Modifier Inventaire</h2>
+            <span class="copyright-text">@ 2026 Olivier Racine</span>
         </div>
-
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
                 <button class="btn btn-add" onclick="addInvRow()">+ ITEM</button>
                 <button class="btn btn-sep" onclick="addInvSep()">+ SÉPARATEUR</button>
                 <button class="btn" style="background:#6c757d;" onclick="toggleImportExport()">IMPORT / EXPORT</button>
             </div>
-            
             <div style="display:flex; align-items:center; gap:12px;">
                 <div class="switch-container">
                     <span>RÉORGANISER</span>
@@ -177,12 +197,10 @@
                 <button class="btn btn-danger" style="font-size:10px; background:#c0392b;" onclick="clearCurrentInventory()">EFFACER TOUT</button>
             </div>
         </div>
-
         <div id="importSection" style="display:none; background:#fff3cd; padding:15px; border-radius:8px; margin-bottom:15px;">
             <textarea id="importText" style="width:100%; height:120px; font-family:monospace; font-size:12px; margin-bottom:10px;"></textarea>
             <button class="btn btn-add" style="width:100%;" onclick="processImport()">IMPORTER (ÉCRASER TOUT)</button>
         </div>
-
         <div class="sticky-table-header">
             <table style="margin-bottom:0; box-shadow:none;">
                 <thead>
@@ -198,7 +216,6 @@
             </table>
         </div>
     </div>
-
     <div class="screen-content">
         <div class="table-container" style="border-top-left-radius:0; border-top-right-radius:0;">
             <table id="inventoryTable">
@@ -210,19 +227,15 @@
 
 <div id="screen-project" class="screen">
     <div class="active-project-banner">
-        <div style="display:flex; align-items:center;">
-            <div onclick="showScreen('screen-home')" style="cursor:pointer; font-size:1.4em; margin-right:12px;">←</div> 
-            <strong id="projDisplayTitle" style="cursor:pointer;" onclick="renameCurrentProj()">Projet</strong>
-            <div class="btn" style="background:#607d8b; padding:4px 8px; font-size:10px; border-radius:4px; margin-left:10px;" onclick="showScreen('screen-inventories')">📦 INVENTAIRES</div>
-        </div>
-        <span style="font-size:0.8em; opacity:0.7;">V24</span>
+        <div onclick="showScreen('screen-home')" style="cursor:pointer; font-size:1.4em; margin-right:35px;">←</div> 
+        <strong id="projDisplayTitle" style="cursor:pointer; margin-right: 20px;" onclick="renameCurrentProj()">Projet</strong>
+        <div class="btn" style="background:#607d8b; padding:4px 10px; font-size:10px; border-radius:4px; margin-left:40px;" onclick="showScreen('screen-inventories')">📦 INVENTAIRES</div>
+        <span class="copyright-text">@ 2026 Olivier Racine</span>
     </div>
-
     <div class="navbar">
         <div id="nav-listes" class="nav-item active" onclick="switchTab('listes')">LISTES</div>
         <div id="nav-finale" class="nav-item" onclick="switchTab('finale')">RÉCAPITULATIF</div>
     </div>
-
     <div id="tab-listes" class="tab-content active" style="padding:20px;">
         <div style="background:white; padding:15px; border-radius:8px; margin-bottom:25px; box-shadow:0 1px 3px rgba(0,0,0,0.1); max-width:700px;">
             <h4 style="margin:0 0 10px 0;">+ Nouvelle Liste</h4>
@@ -234,7 +247,6 @@
         </div>
         <div id="listsWrapper"></div>
     </div>
-
     <div id="tab-finale" class="tab-content" style="display:none; padding:20px;">
         <div style="display:flex; justify-content: flex-end; margin-bottom: 20px;">
             <button class="btn btn-subtle" style="width: auto; height: auto; padding: 8px 15px; font-size: 11px;" onclick="copyAllLists()">COPIER TOUTES LES LISTES</button>
@@ -246,7 +258,6 @@
 <script>
     let projects = JSON.parse(localStorage.getItem('vt_v24_projs')) || [];
     let inventories = JSON.parse(localStorage.getItem('vt_v24_invs')) || [];
-    
     let currentProjId = null;
     let currentInvId = null;
     let draggedIdx = null;
@@ -310,20 +321,19 @@
 
     function toggleReorderMode() {
         reorderMode = document.getElementById('reorderToggle').checked;
+        const table = document.getElementById('inventoryTable');
+        if(reorderMode) table.classList.add('reorder-active');
+        else table.classList.remove('reorder-active');
         renderInventoryEditor();
     }
 
     function renderInventoryEditor() {
         const inv = inventories.find(i => i.id === currentInvId);
         const tbody = document.getElementById('inventoryBody');
-        const table = document.getElementById('inventoryTable');
-        table.className = reorderMode ? 'reorder-active' : '';
         tbody.innerHTML = '';
-
         inv.items.forEach((item, idx) => {
             const tr = document.createElement('tr');
             if(item.isSep) tr.className = 'row-separator';
-            
             if(reorderMode) {
                 tr.draggable = true;
                 tr.addEventListener('dragstart', () => { draggedIdx = idx; tr.classList.add('dragging'); });
@@ -335,9 +345,7 @@
                 });
                 tr.addEventListener('dragend', () => tr.classList.remove('dragging'));
             }
-
             const safeName = item.name.replace(/"/g, '&quot;');
-
             tr.innerHTML = `
                 <td style="width:30px;"><div class="drag-handle">≡</div></td>
                 <td style="width:75px;"><input type="number" class="rank-input" value="${idx+1}" onchange="moveRank(${idx}, this.value-1)"></td>
@@ -471,22 +479,33 @@
             div.className = `list-container ${list.hideFinance ? 'hide-finance' : ''}`;
             
             div.innerHTML = `
-                <div class="list-header">
-                    <strong>${list.name} <br><small style="color:#4a90e2; font-size:0.7em;">${inv.name}</small></strong>
-                    <div style="display:flex; align-items:center; gap:6px;">
-                        <span class="total-list-display price-col" id="total-display-${lIdx}">0,00</span>
+                <div class="list-header-top">
+                    <div class="list-title-area">
+                        <strong>${list.name}</strong><br>
+                        <small style="color:#4a90e2;">${inv.name}</small>
                         <button class="btn-view ${!list.hideFinance ? 'active' : ''}" onclick="toggleListFinance(${lIdx})">👁️</button>
-                        <div style="display:flex; align-items:center; gap:4px;" class="price-col">
-                           <input type="number" step="1" class="discount-input" value="${list.globalDiscount}" id="global-disc-${lIdx}" onchange="updateGlobalDiscount(${lIdx}, this.value)">
-                           <button class="btn-apply-all" title="Appliquer à toute la liste" onclick="applyDiscountToAll(${lIdx})">⟳</button>
+                    </div>
+                    
+                    <div class="list-finance-controls finance-ui">
+                        <div style="width:80px;">
+                           <button class="btn-subtle" style="border-radius:50%; width:24px; height:24px; margin: 0 auto; display: block;" onclick="resetListPrices(${lIdx})" title="Réinitialiser les prix">⟳</button>
                         </div>
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; width:65px;">
+                            <input type="number" step="1" class="discount-input" style="width:40px !important;" value="${list.globalDiscount}" onchange="updateGlobalDiscount(${lIdx}, this.value)">
+                            <button class="btn-apply-all" title="Appliquer à tout" onclick="applyDiscountToAll(${lIdx})">⟳</button>
+                        </div>
+                        <div class="total-list-display" id="total-display-${lIdx}">0,00</div>
+                    </div>
+
+                    <div style="display:flex; gap:2px; margin-left:10px;">
                         <button class="btn btn-subtle" style="width:24px; height:24px; font-size:10px;" onclick="renameList(${lIdx})">✎</button>
                         <button class="btn btn-subtle" style="width:24px; height:24px; font-size:10px;" onclick="duplicateList(${lIdx})">❐</button>
                         <button class="btn btn-danger" style="width:24px; height:24px; font-size:10px;" onclick="deleteList(${lIdx})">×</button>
                     </div>
                 </div>
+
                 <div style="position:relative; margin-bottom:10px;">
-                    <input type="text" class="search-input" placeholder="Chercher un item..." style="width:100%;" oninput="searchInList(this, '${list.invSourceId}', ${lIdx})">
+                    <input type="text" class="search-input" placeholder="Chercher ou nommer un item..." style="width:100%;" oninput="searchInList(this, '${list.invSourceId}', ${lIdx})">
                     <div class="suggestions" style="display:none;"></div>
                     <div class="pre-add-container">
                         <div class="qty-picker">
@@ -502,6 +521,20 @@
             wrapper.appendChild(div);
             renderListItems(lIdx);
         });
+    }
+
+    function resetListPrices(lIdx) {
+        if(!confirm("Réinitialiser tous les prix de cette liste aux valeurs d'origine ?")) return;
+        const p = projects.find(proj => proj.id === currentProjId);
+        const list = p.lists[lIdx];
+        const inv = inventories.find(i => i.id === list.invSourceId);
+        list.selections.forEach(sel => {
+            if(sel.itemId) {
+                const invItem = inv.items.find(i => i.id === sel.itemId);
+                if(invItem) sel.customPrice = invItem.price;
+            } else { sel.customPrice = 0; }
+        });
+        save(); renderListItems(lIdx);
     }
 
     function renameList(lIdx) {
@@ -535,10 +568,8 @@
     function applyDiscountToAll(lIdx) {
         const p = projects.find(proj => proj.id === currentProjId);
         const list = p.lists[lIdx];
-        list.selections.forEach(sel => {
-            sel.discount = list.globalDiscount;
-        });
-        save(); renderProjectLists();
+        list.selections.forEach(sel => { sel.discount = list.globalDiscount; });
+        save(); renderListItems(lIdx);
     }
 
     function changePreAddQty(lIdx, val) {
@@ -551,11 +582,7 @@
         const val = input.value.toLowerCase();
         const suggBox = input.nextElementSibling;
         suggBox.innerHTML = '';
-        if(val.length < 1) { 
-            suggBox.style.display = 'none'; 
-            listSearchState[listIdx] = null;
-            return; 
-        }
+        if(val.length < 1) { suggBox.style.display = 'none'; listSearchState[listIdx] = null; return; }
         const inv = inventories.find(i => i.id === invId);
         const matches = inv.items.filter(i => !i.isSep && i.name.toLowerCase().includes(val));
         if(matches.length > 0) {
@@ -564,37 +591,30 @@
                 const d = document.createElement('div');
                 d.style.padding = '10px'; d.style.cursor = 'pointer'; d.style.borderBottom = '1px solid #eee';
                 d.textContent = m.name;
-                d.onclick = () => { 
-                    input.value = m.name; 
-                    listSearchState[listIdx] = m.id;
-                    suggBox.style.display = 'none'; 
-                };
+                d.onclick = () => { input.value = m.name; listSearchState[listIdx] = m.id; suggBox.style.display = 'none'; };
                 suggBox.appendChild(d);
             });
         }
     }
 
     function addItemFromSearch(lIdx) {
-        const itemId = listSearchState[lIdx];
-        if(!itemId) return;
-        const qtyInput = document.getElementById(`pre-qty-${lIdx}`);
-        const qty = parseInt(qtyInput.value) || 1;
-        
         const p = projects.find(proj => proj.id === currentProjId);
         const list = p.lists[lIdx];
-        const existing = list.selections.find(s => s.itemId === itemId);
-        
-        if(existing) {
-            existing.qty += qty;
-        } else {
-            list.selections.push({ itemId: itemId, qty: qty, discount: list.globalDiscount });
-        }
-        
         const listContainer = document.querySelectorAll(`#listsWrapper .list-container`)[lIdx];
-        listContainer.querySelector('.search-input').value = ''; 
-        qtyInput.value = 1;  
-        listSearchState[lIdx] = null;
-        
+        const searchInput = listContainer.querySelector('.search-input');
+        const qtyInput = document.getElementById(`pre-qty-${lIdx}`);
+        const itemId = listSearchState[lIdx];
+        const itemName = searchInput.value.trim();
+        const qty = parseInt(qtyInput.value) || 1;
+        if(!itemName) return;
+        if(itemId) {
+            const existing = list.selections.find(s => s.itemId === itemId);
+            if(existing) existing.qty += qty;
+            else list.selections.push({ itemId: itemId, qty: qty, discount: list.globalDiscount });
+        } else {
+            list.selections.push({ itemId: null, manualName: itemName, qty: qty, discount: list.globalDiscount, customPrice: 0 });
+        }
+        searchInput.value = ''; qtyInput.value = 1; listSearchState[lIdx] = null;
         save(); renderListItems(lIdx);
     }
 
@@ -604,7 +624,6 @@
         const inv = inventories.find(i => i.id === list.invSourceId);
         const container = document.getElementById(`items-list-${lIdx}`);
         container.innerHTML = '';
-
         let listGrandTotal = 0;
 
         inv.items.forEach(invItem => {
@@ -615,76 +634,86 @@
                 sep.textContent = invItem.name;
                 container.appendChild(sep);
             } else if(sel) {
-                if (sel.discount === undefined) sel.discount = list.globalDiscount;
-                
-                const unitPrice = invItem.price || 0;
-                const lineTotal = sel.qty * unitPrice * (1 - (sel.discount / 100));
-                listGrandTotal += lineTotal;
-
-                const isOverridden = sel.discount !== list.globalDiscount;
-
-                const itemDiv = document.createElement('div');
-                itemDiv.style.display = 'flex'; 
-                itemDiv.style.justifyContent = 'space-between';
-                itemDiv.style.alignItems = 'center'; 
-                itemDiv.style.padding = '8px 0'; 
-                itemDiv.style.borderBottom = '1px solid #f0f0f0';
-                
-                itemDiv.innerHTML = `
-                    <div style="flex: 1; min-width: 0; padding-right:10px;">
-                        <span style="font-size:0.9em; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                            <strong>${sel.qty}x</strong> ${invItem.name}
-                        </span>
-                    </div>
-                    
-                    <div class="price-col" style="color:#888;">${unitPrice.toFixed(2)}</div>
-                    
-                    <div class="price-col">
-                        <input type="number" 
-                               step="1"
-                               class="discount-input ${isOverridden ? 'override' : ''}" 
-                               value="${sel.discount}" 
-                               onchange="updateItemDiscount(${lIdx}, ${invItem.id}, this.value)">
-                    </div>
-                    
-                    <div class="price-col" style="font-weight:bold;">${lineTotal.toFixed(2)}</div>
-
-                    <div style="display:flex; gap:4px; margin-left:10px;">
-                        <button class="btn-subtle" style="width:26px; height:26px; color:red; font-weight:bold; background:white; border:1px solid #ddd;" onclick="removeItem(${lIdx}, ${invItem.id})">×</button>
-                        <button class="btn-subtle" style="width:26px; height:26px;" onclick="updateQty(${lIdx}, ${invItem.id}, 1)">+</button>
-                        <button class="btn-subtle" style="width:26px; height:26px;" onclick="updateQty(${lIdx}, ${invItem.id}, -1)">-</button>
-                    </div>
-                `;
-                container.appendChild(itemDiv);
+                listGrandTotal += renderSingleItemRow(container, lIdx, sel, invItem.name, invItem.price, list.globalDiscount, list.hideFinance);
             }
+        });
+
+        list.selections.filter(s => s.itemId === null).forEach(sel => {
+            listGrandTotal += renderSingleItemRow(container, lIdx, sel, sel.manualName, 0, list.globalDiscount, list.hideFinance);
         });
 
         const totalDisplay = document.getElementById(`total-display-${lIdx}`);
         if(totalDisplay) totalDisplay.textContent = listGrandTotal.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    function updateItemDiscount(lIdx, itemId, val) {
-        const p = projects.find(proj => proj.id === currentProjId);
-        const sel = p.lists[lIdx].selections.find(s => s.itemId === itemId);
-        if(sel) {
-            sel.discount = parseFloat(val) || 0;
-            save(); renderListItems(lIdx);
+    function renderSingleItemRow(container, lIdx, sel, displayName, basePrice, globalDisc, isHidden) {
+        if (sel.discount === undefined) sel.discount = globalDisc;
+        if (sel.customPrice === undefined) sel.customPrice = basePrice;
+        const currentPrice = sel.customPrice;
+        const lineTotal = sel.qty * currentPrice * (1 - (sel.discount / 100));
+        
+        const isDiscountOverridden = Math.abs(sel.discount - globalDisc) > 0.01;
+        const isPriceOverridden = Math.abs(currentPrice - basePrice) > 0.001;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'list-grid-row';
+        itemDiv.style.padding = '8px 0';
+        itemDiv.style.borderBottom = '1px solid #f0f0f0';
+        
+        let html = `
+            <div style="min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.9em;">
+                <strong>${sel.qty}x</strong> ${displayName} 
+                <button class="btn-delete-item" onclick="removeItem(${lIdx}, ${sel.itemId}, '${sel.manualName || ''}')">×</button>
+            </div>`;
+
+        if (!isHidden) {
+            html += `
+            <div class="finance-ui">
+                <input type="number" step="0.01" class="price-input no-spinners ${isPriceOverridden ? 'override' : ''}" value="${currentPrice.toFixed(2)}" onchange="updateItemPrice(${lIdx}, ${sel.itemId}, '${sel.manualName || ''}', this.value)">
+            </div>
+            <div class="finance-ui">
+                <input type="number" step="1" class="discount-input ${isDiscountOverridden ? 'override' : ''}" value="${sel.discount}" onchange="updateItemDiscount(${lIdx}, ${sel.itemId}, '${sel.manualName || ''}', this.value)">
+            </div>
+            <div class="finance-ui price-col-cell" style="font-weight:bold;">${lineTotal.toFixed(2)}</div>`;
         }
+
+        html += `
+            <div style="display:flex; gap:4px; justify-content: flex-end;">
+                <button class="btn btn-subtle ipad-qty-btn" onclick="updateQty(${lIdx}, ${sel.itemId}, '${sel.manualName || ''}', 1)">+</button>
+                <button class="btn btn-subtle ipad-qty-btn" onclick="updateQty(${lIdx}, ${sel.itemId}, '${sel.manualName || ''}', -1)">-</button>
+            </div>`;
+        
+        itemDiv.innerHTML = html;
+        container.appendChild(itemDiv);
+        return lineTotal;
     }
 
-    function updateQty(lIdx, itemId, change) {
+    function updateItemPrice(lIdx, itemId, manualName, val) {
         const p = projects.find(proj => proj.id === currentProjId);
-        const sel = p.lists[lIdx].selections.find(s => s.itemId === itemId);
-        if(sel) {
-            sel.qty += change;
-            if(sel.qty <= 0) p.lists[lIdx].selections = p.lists[lIdx].selections.filter(s => s.itemId !== itemId);
-        }
+        const list = p.lists[lIdx];
+        const sel = list.selections.find(s => s.itemId === itemId && (itemId !== null || s.manualName === manualName));
+        if(sel) { sel.customPrice = parseFloat(val) || 0; save(); renderListItems(lIdx); }
+    }
+
+    function updateItemDiscount(lIdx, itemId, manualName, val) {
+        const p = projects.find(proj => proj.id === currentProjId);
+        const list = p.lists[lIdx];
+        const sel = list.selections.find(s => s.itemId === itemId && (itemId !== null || s.manualName === manualName));
+        if(sel) { sel.discount = parseFloat(val) || 0; save(); renderListItems(lIdx); }
+    }
+
+    function updateQty(lIdx, itemId, manualName, change) {
+        const p = projects.find(proj => proj.id === currentProjId);
+        const list = p.lists[lIdx];
+        const sel = list.selections.find(s => s.itemId === itemId && (itemId !== null || s.manualName === manualName));
+        if(sel) { sel.qty += change; if(sel.qty <= 0) removeItem(lIdx, itemId, manualName); }
         save(); renderListItems(lIdx);
     }
 
-    function removeItem(lIdx, itemId) {
+    function removeItem(lIdx, itemId, manualName) {
         const p = projects.find(proj => proj.id === currentProjId);
-        p.lists[lIdx].selections = p.lists[lIdx].selections.filter(s => s.itemId !== itemId);
+        const list = p.lists[lIdx];
+        list.selections = list.selections.filter(s => !(s.itemId === itemId && (itemId !== null || s.manualName === manualName)));
         save(); renderListItems(lIdx);
     }
 
@@ -745,6 +774,9 @@
                 if(invItem.isSep) html += `<tr style="background:#f1f1f1;"><td colspan="2" style="height:30px;"></td></tr>`;
                 else if(sel) html += `<tr><td style="width:50px; font-weight:bold; text-align:center;">${sel.qty}</td><td>${invItem.name}</td></tr>`;
             });
+            list.selections.filter(s => s.itemId === null).forEach(sel => {
+                html += `<tr><td style="width:50px; font-weight:bold; text-align:center;">${sel.qty}</td><td>${sel.manualName}</td></tr>`;
+            });
             html += `</table></div>`;
             container.innerHTML += html;
         });
@@ -760,6 +792,9 @@
             if(invItem.isSep) txt += "\u00A0\t\u00A0\n\u00A0\t\u00A0\n";
             else if(sel) txt += `${sel.qty}\t${invItem.name}\n`;
         });
+        list.selections.filter(s => s.itemId === null).forEach(sel => {
+            txt += `${sel.qty}\t${sel.manualName}\n`;
+        });
         navigator.clipboard.writeText(txt);
     }
 
@@ -773,6 +808,9 @@
                 const sel = list.selections.find(s => s.itemId === invItem.id);
                 if(invItem.isSep) txt += "\u00A0\t\u00A0\n\u00A0\t\u00A0\n";
                 else if(sel) txt += `${sel.qty}\t${invItem.name}\n`;
+            });
+            list.selections.filter(s => s.itemId === null).forEach(sel => {
+                txt += `${sel.qty}\t${sel.manualName}\n`;
             });
             txt += "\n";
         });
